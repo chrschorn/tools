@@ -1,3 +1,4 @@
+import argparse
 import sys
 import subprocess
 from datetime import datetime
@@ -6,7 +7,7 @@ from datetime import timedelta
 
 def strftimedelta(delta):
     res = []
-    if(delta.days > 0):
+    if delta.days > 0:
         res.append(delta.days)
         res.append('days,')
 
@@ -17,15 +18,17 @@ def strftimedelta(delta):
 
 
 if __name__ == '__main__':
-    sys.argv.pop(0)  # remove file name
-    if len(sys.argv) == 0:
-        shutdowntime = "0:00"
-    elif sys.argv[0] in ('-a', '--abort'):
+    parser = argparse.ArgumentParser()
+    parser.add_argument('time', type=str, nargs='?', default=None, help="time to schedule shutdown for")
+    parser.add_argument('-a', '--abort', action='store_true',
+                        help="cancels existing shutdown schedule")
+    args = parser.parse_args()
+
+    if args.abort:
         subprocess.run(['shutdown', '/a'])
         sys.exit()
-    else:
-        shutdowntime = sys.argv[0]
 
+    shutdowntime = args.time if args.time else "0:00"
     shutdowntime = list(map(int, shutdowntime.split(':')))
     now = datetime.now()
     shutdowntime = datetime(now.year, now.month, now.day, *shutdowntime)
