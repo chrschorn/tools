@@ -11,6 +11,7 @@
 doskey cl = cd $* $T ls -l --show-control-chars -F --color
 doskey ls = ls --show-control-chars -F --color $*
 doskey ll = ls -l --show-control-chars -F --color $*
+doskey .. = cd ..
 
 :: Git
 doskey gc = git commit -m $*
