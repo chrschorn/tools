@@ -15,11 +15,11 @@ doskey .. = cd ..
 
 :: Git
 doskey gc = git commit -m $*
-doskey gp = git push
+doskey gp = git push $*
 
 doskey ga = git add $*
-doskey gs = git status 
-doskey gl = git log --oneline --all --graph --decorate  $*
+doskey gs = git status $*
+doskey gl = git log --oneline --all --graph --decorate $*
 
 doskey gita = FOR /d %%F IN (*) DO  @( cd %%F $T echo %%F: $T git $* $T echo. $T cd .. )
 
@@ -33,7 +33,7 @@ doskey ws = cd /d "%WORKSPACE_DIR%"
 
 :: Misc
 doskey e.    = explorer .
-doskey npp   = "%ProgramFiles(x86)%\Notepad++\notepad++.exe"
+doskey npp   = "%ProgramFiles(x86)%\Notepad++\notepad++.exe" $*
 doskey clear = cls
 
 :: Aliases
