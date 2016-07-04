@@ -6,8 +6,15 @@
 
 :: for Cmder: put this into Cmder/config as "user-startup.cmd"
 
+:: setlocal does not affect doskey commands
 @echo off
+setlocal
 
+:: get the "real" dir of this file, I insert this into Cmder with a symlink
+for /f %%i in ('dir "%~dp0" ^| grep "<SYMLINK>" ^| cut -d "[" -f2 ^| cut -d "]" -f1') do set ABS_PATH=%%i
+for /f %%i in ('dirname %ABS_PATH%') do set TOOLS_DIR=%%i
+
+:: Navigation
 doskey cl = cd $* $T ls -l --show-control-chars -F --color
 doskey ls = ls --show-control-chars -F --color $*
 doskey ll = ls -l --show-control-chars -F --color $*
