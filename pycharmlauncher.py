@@ -12,7 +12,7 @@ def find_file(path, name):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('path', default='.', help="path to open with PyCharm")
+    parser.add_argument('path', nargs='?', default='.', help="path to open with PyCharm")
     args = parser.parse_args()
 
     # assume pycharm is in "Program Files (x86)\JetBrains\<something>" (default install dir)
