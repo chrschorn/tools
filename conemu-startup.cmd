@@ -31,8 +31,9 @@ doskey gl = git log --oneline --all --graph --decorate $*
 doskey gita = FOR /d %%F IN (*) DO  @( cd %%F $T echo %%F: $T git $* $T echo. $T cd .. )
 
 :: Custom Programs
-doskey pss = python "%WORKSPACE_DIR%\tools\scheduleshutdown.py" $*
-doskey bud = python "%WORKSPACE_DIR%\tools\datefilebackup.py" $*
+doskey pss  = python "%TOOLS_DIR%\scheduleshutdown.py" $*
+doskey bud  = python "%TOOLS_DIR%\datefilebackup.py" $*
+doskey pych = python "%TOOLS_DIR%\pycharmlauncher.py" $*
 
 :: Folders
 doskey pr = cd /d "%PROJECT_DIR%"
