@@ -7,7 +7,7 @@ def find_file(path, name):
     for root, _, files in os.walk(path):
         if name in files:
             return os.path.abspath(os.path.join(path, root, name))
-    raise FileNotFoundError("Could not find pycharm.exe!")
+    raise FileNotFoundError("Could not find {}!".format(name))
 
 
 if __name__ == '__main__':
