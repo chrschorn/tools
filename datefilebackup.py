@@ -27,7 +27,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('file', type=str, help="File to backup")
     parser.add_argument('path', nargs='?', type=str, default=None, help="Path to copy the file to")
-    parser.add_argument('name', nargs='?', type=str, default=None, help="New filename")
+    parser.add_argument('-n', '--name', type=str, default=None, help="New filename")
     args = parser.parse_args()
 
     date_file_copy(args.file, args.path, args.name)
