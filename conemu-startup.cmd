@@ -43,6 +43,7 @@ doskey pr = cd /d "%PROJECT_DIR%"
 doskey ws = cd /d "%WORKSPACE_DIR%"
 
 :: Misc
+doskey g     = gvim --remote-silent $*
 doskey e.    = explorer .
 doskey npp   = "%ProgramFiles(x86)%\Notepad++\notepad++.exe" $*
 doskey clear = cls
