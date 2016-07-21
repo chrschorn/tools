@@ -18,10 +18,11 @@ for /f %%i in ('dirname %ABS_PATH%') do set TOOLS_DIR=%%i
 doskey cl = cd $* $T ls -l --show-control-chars -F --color
 doskey ls = ls --show-control-chars -F --color $*
 doskey ll = ls -l --show-control-chars -F --color $*
+doskey l  = ls -l --show-control-chars -F -a --color $*
 doskey .. = cd ..
 
 :: Git
-doskey gc = git commit -m $*
+doskey gc = git commit $*
 doskey gp = git push $*
 
 doskey ga = git add $*
@@ -50,6 +51,6 @@ doskey clear = cls
 
 :: Aliases
 doskey aliases     = doskey /MACROS
-doskey editaliases = vim "%~f0"
+doskey editaliases = gvim "%~f0"
 
 echo on
