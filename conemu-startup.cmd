@@ -25,9 +25,10 @@ doskey .. = cd ..
 doskey gc = git commit $*
 doskey gp = git push $*
 
-doskey ga = git add $*
-doskey gs = git status $*
-doskey gl = git log --oneline --all --graph --decorate $*
+doskey ga  = git add $*
+doskey gs  = git status $*
+doskey gl  = git log --oneline --graph --decorate $*
+doskey gla = git log --oneline --all --graph --decorate $*
 
 doskey gb  = git branch $*
 doskey gco = git checkout $*
@@ -53,4 +54,4 @@ doskey clear = cls
 doskey aliases     = doskey /MACROS
 doskey editaliases = gvim "%~f0"
 
-echo on
+REM echo on
