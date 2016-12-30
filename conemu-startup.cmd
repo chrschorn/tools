@@ -36,9 +36,10 @@ doskey gco = git checkout $*
 doskey gita = FOR /d %%F IN (*) DO  @( cd %%F $T echo %%F: $T git $* $T echo. $T cd .. )
 
 :: Custom Programs
-doskey pss  = python "%TOOLS_DIR%\scheduleshutdown.py" $*
-doskey bud  = python "%TOOLS_DIR%\datefilebackup.py" $*
-doskey pych = python "%TOOLS_DIR%\pycharmlauncher.py" $*
+doskey pss   = python "%TOOLS_DIR%\scheduleshutdown.py" $*
+doskey bud   = python "%TOOLS_DIR%\datefilebackup.py" $*
+doskey pych  = python "%TOOLS_DIR%\pycharmlauncher.py" $*
+doskey rfile = python "%TOOLS_DIR%\randfile.py" $*
 
 :: Folders
 doskey pr = cd /d "%PROJECT_DIR%"
