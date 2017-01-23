@@ -51,6 +51,9 @@ doskey e.    = explorer .
 doskey npp   = "%ProgramFiles(x86)%\Notepad++\notepad++.exe" $*
 doskey clear = cls
 
+:: General shortcuts
+doskey pipupdateall = pip freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs pip install -U
+
 :: Aliases
 doskey aliases     = doskey /MACROS
 doskey editaliases = gvim "%~f0"
