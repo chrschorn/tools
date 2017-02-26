@@ -12,6 +12,7 @@ if __name__ == '__main__':
     parser.add_argument('path', nargs='?', type=str, default="**", help="optional path to a specific folder")
     parser.add_argument('-c', '--count', type=int, default=1, help="amount of files to open")
     parser.add_argument('-n', '--non-recursive', action='store_false', help="do not search recursively")
+    parser.add_argument('-b', '--blacklist', nargs='+', help="file endings not to open")
 
     args = parser.parse_args()
 
@@ -20,7 +21,12 @@ if __name__ == '__main__':
     if '*' not in args.path:
         args.path = os.path.join(args.path, '**')
 
+
     rand_files = list(filter(lambda s: os.path.isfile(s), glob.glob(args.path, recursive=args.non_recursive)))
+
+    if args.blacklist:
+        args.blacklist = tuple(args.blacklist)
+        rand_files = [file for file in rand_files if not file.endswith(args.blacklist)]
 
     try:
         rand_files = random.sample(rand_files, k=args.count)
