@@ -4,16 +4,16 @@
 :: @call "C:\Program Files\Git/cmd/start-ssh-agent.cmd
 :: @set PATH=%CMDER_ROOT%\vendor\whatever;%PATH%
 
-:: for Cmder: put this into Cmder/config as "user-startup.cmd"
+:: for cmder: put this into cmder/config as "user-startup.cmd"
 
 :: setlocal does not affect doskey commands
 @echo off
 setlocal
 
-:: call local script, if TOOLS_DIR is set there, scripts will be configuired here
+:: call local script, if TOOLS_DIR is set there, scripts will be configured 
 set localscr=%HOME%\conemu-startup.local.cmd
 if exist %localscr% (
-	Call %localscr%
+	call %localscr%
 )
 
 :: Navigation
@@ -38,10 +38,14 @@ doskey gco = git checkout $*
 doskey gita = FOR /d %%F IN (*) DO  @( cd %%F $T echo %%F: $T git $* $T echo. $T cd .. )
 
 :: Custom Programs
-doskey pss   = python "%TOOLS_DIR%\scheduleshutdown.py" $*
-doskey bud   = python "%TOOLS_DIR%\datefilebackup.py" $*
-doskey pych  = python "%TOOLS_DIR%\pycharmlauncher.py" $*
-doskey rfile = python "%TOOLS_DIR%\randfile.py" $*
+if "%TOOLS_DIR%" NEQ "" (
+    doskey pss   = python "%TOOLS_DIR%\scheduleshutdown.py" $*
+    doskey bud   = python "%TOOLS_DIR%\datefilebackup.py" $*
+    doskey pych  = python "%TOOLS_DIR%\pycharmlauncher.py" $*
+    doskey rfile = python "%TOOLS_DIR%\randfile.py" $*
+) else (
+    echo No TOOLS_DIR set!
+)
 
 :: Folders
 doskey pr = cd /d "%PROJECT_DIR%"
@@ -59,11 +63,10 @@ doskey pipupdateall = pip freeze --local ^| grep -v '^\-e' ^| cut -d = -f 1  ^| 
 :: Aliases
 doskey aliases     = doskey /MACROS
 doskey editaliases = gvim "%~f0"
-
+doskey editlocalaliases = gvim %localscr%
 
 :: call local script
 if exist %localscr% (
-	Call %localscr%
+	call %localscr%
 )
 
-REM echo on
