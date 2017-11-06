@@ -10,9 +10,11 @@
 @echo off
 setlocal
 
-:: get the "real" dir of this file, I insert this into Cmder with a symlink
-for /f %%i in ('dir "%~dp0" ^| grep "<SYMLINK>" ^| cut -d "[" -f2 ^| cut -d "]" -f1') do set ABS_PATH=%%i
-for /f %%i in ('dirname %ABS_PATH%') do set TOOLS_DIR=%%i
+:: call local script, if TOOLS_DIR is set there, scripts will be configuired here
+set localscr=%HOME%\conemu-startup.local.cmd
+if exist %localscr% (
+	Call %localscr%
+)
 
 :: Navigation
 doskey cl = cd $* $T ls -l --show-control-chars -F --color
@@ -57,5 +59,11 @@ doskey pipupdateall = pip freeze --local ^| grep -v '^\-e' ^| cut -d = -f 1  ^| 
 :: Aliases
 doskey aliases     = doskey /MACROS
 doskey editaliases = gvim "%~f0"
+
+
+:: call local script
+if exist %localscr% (
+	Call %localscr%
+)
 
 REM echo on
