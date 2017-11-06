@@ -17,6 +17,28 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 
 
 ; ---------
+; Functions
+; ---------
+StartOrActivate(id, path) 
+{
+    IfWinExist, %id% 
+    {
+        IfWinActive, %id% 
+            WinMinimize %id% 
+        else
+            WinActivate %id% 
+            WinSet, Top
+    }
+    else
+    {
+        Run %path%
+        WinWait %id%
+        WinMaximize
+    }
+    Return
+}
+
+; ---------
 ; Variables
 ; ---------
 EnvGet, APPDATA, appdata  ; left: env variable, right: script variable name
@@ -30,6 +52,9 @@ spotify_path = %appdata%\Spotify\Spotify.exe
 
 keepass_id = ahk_exe KeePass.exe
 keepass_path = %home%\KeePass\KeePass.exe
+
+gvim_id = ahk_class Vim
+gvim_path = gvim.exe
 
 
 ; --------------------------------------------------------------------------------------
@@ -45,23 +70,7 @@ keepass_path = %home%\KeePass\KeePass.exe
 >^PgDn::Media_Next
 >^Insert::WinMenuSelectItem, %spotify_id%, , 4&, 8&  ; Spotify Shuffle Mode
 >^PgUp::WinMenuSelectItem, %spotify_id%, , 4&, 9& ; Spotify Repeat Mode
->^Home::  ; start spotify maximized or activate spotify if already exists
-IfWinExist, %spotify_id%
-{
-	IfWinActive, %spotify_id%
-		WinMinimize %spotify_id%
-	else
-		WinActivate %spotify_id%
-		WinSet, Top
-}
-else
-{
-	Run %spotify_path%
-	WinWait %spotify_id%
-	WinMaximize
-}
-Return
-
+>^Home::StartOrActivate(spotify_id, spotify_path)  ; start spotify maximized or activate spotify if already exists
 >^Up::Send {Volume_Up}
 >^Down::Send {Volume_Down}
 
@@ -69,10 +78,17 @@ Return
 ; ---------------------
 ; Get ahk_class name of active window
 ; ---------------------
->^g::  ; right ctrl + g
+>^w::  ; right ctrl + g
 WinGetClass, class, A
 MsgBox, The active window's class is "%class%".
 Return
+
+
+;----------------------
+; Activate gvim
+;----------------------
+#If !WinActive(gvim_id)
+>^g::StartOrActivate(gvim_id, gvim_path)
 
 ; ---------------------
 ; Run programs if no window of them exists
