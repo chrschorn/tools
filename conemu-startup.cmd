@@ -37,12 +37,14 @@ doskey gco = git checkout $*
 
 doskey gita = FOR /d %%F IN (*) DO  @( cd %%F $T echo %%F: $T git $* $T echo. $T cd .. )
 
-:: Custom Programs
+:: tool dir setup
 if "%TOOLS_DIR%" NEQ "" (
     doskey pss   = python "%TOOLS_DIR%\scheduleshutdown.py" $*
     doskey bud   = python "%TOOLS_DIR%\datefilebackup.py" $*
     doskey pych  = python "%TOOLS_DIR%\pycharmlauncher.py" $*
     doskey rfile = python "%TOOLS_DIR%\randfile.py" $*
+    doskey editshortcuts = gvim "%TOOLS_DIR%\shortcuts.ahk"
+    doskey cdtooldir = cd /d "%TOOLS_DIR%"
 ) else (
     echo No TOOLS_DIR set!
 )
