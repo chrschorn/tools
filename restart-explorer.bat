@@ -1,7 +1,5 @@
 @echo off
 setlocal
 
-taskkill /F /IM explorer.exe 
-Timeout 2
-start explorer.exe
+runas /user:%username%@%userdnsdomain% "cmd /C taskkill /F /IM explorer.exe && timeout 2 && start explorer.exe"
 
