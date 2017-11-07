@@ -24,16 +24,21 @@ StartOrActivate(id, path)
     IfWinExist, %id% 
     {
         IfWinActive, %id% 
+        {
             WinMinimize %id% 
-        else
+        }
+        else 
+        {
             WinActivate %id% 
             WinSet, Top
+        }
     }
     else
     {
         Run %path%
         WinWait %id%
-        WinMaximize
+        WinMaximize %id%
+        WinSet, Top
     }
     Return
 }
@@ -41,8 +46,8 @@ StartOrActivate(id, path)
 ; ---------
 ; Variables
 ; ---------
-EnvGet, APPDATA, appdata  ; left: env variable, right: script variable name
-EnvGet, HOME, home
+EnvGet, appdata, APPDATA  ; left: env variable, right: script variable name
+EnvGet, home, USERPROFILE
 
 cmder_id = ahk_class VirtualConsoleClass
 cmder_path = %home%\cmder\Cmder.exe
@@ -91,7 +96,7 @@ Return
 >^g::StartOrActivate(gvim_id, gvim_path)
 
 ; ---------------------
-; Run programs if no window of them exists
+; Run programs if no window of them exists (typically have own activate hotkey)
 ; ---------------------
 #If !WinExist(cmder_id)
 ^ö::Run %cmder_path%
