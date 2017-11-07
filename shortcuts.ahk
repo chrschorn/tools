@@ -19,7 +19,7 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 ; ---------
 ; Functions
 ; ---------
-StartOrActivate(id, path) 
+StartOrActivate(id, path, maximized:=true) 
 {
     IfWinExist, %id% 
     {
@@ -37,7 +37,8 @@ StartOrActivate(id, path)
     {
         Run %path%
         WinWait %id%
-        WinMaximize %id%
+        if maximized
+            WinMaximize %id%
         WinSet, Top
     }
     Return
@@ -60,6 +61,9 @@ keepass_path = %home%\KeePass\KeePass.exe
 
 gvim_id = ahk_class Vim
 gvim_path = gvim.exe
+
+calc_id = ahk_class CalcFrame
+calc_path = calc.exe
 
 
 ; --------------------------------------------------------------------------------------
@@ -90,10 +94,13 @@ Return
 
 
 ;----------------------
-; Activate gvim
+; Start or activate programs
 ;----------------------
 #If !WinActive(gvim_id)
 >^g::StartOrActivate(gvim_id, gvim_path)
+
+#If !WinActive(calc_id)
+>^r::StartOrActivate(calc_id, calc_path, false)
 
 ; ---------------------
 ; Run programs if no window of them exists (typically have own activate hotkey)
