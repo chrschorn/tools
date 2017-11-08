@@ -117,9 +117,12 @@ def get_pycharm_exe_path():
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('path', nargs='?', default='.', help="path to open with PyCharm")
+    parser.add_argument('-v', '--verbose', action='store_true', help="show which paths are used")
     args = parser.parse_args()
 
     pycharm_exe = get_pycharm_exe_path()
     path = os.path.abspath(args.path)  # pycharm actually can't handle a '.' path
 
+    if args.verbose:
+        print(pycharm_exe, path)
     subprocess.Popen([pycharm_exe, path])
