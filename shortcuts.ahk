@@ -82,6 +82,7 @@ calc_path = calc.exe
 >^Home::StartOrActivate(spotify_id, spotify_path)  ; start spotify maximized or activate spotify if already exists
 >^Up::Send {Volume_Up}
 >^Down::Send {Volume_Down}
+#l::Media_Stop  ; stop music when locking windows
 
 
 ; ---------------------
