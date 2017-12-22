@@ -35,7 +35,7 @@ doskey gla = git log --oneline --all --graph --decorate $*
 doskey gb  = git branch $*
 doskey gco = git checkout $*
 
-doskey gita = FOR /d %%F IN (*) DO  @( cd %%F $T echo %%F: $T git $* $T echo. $T cd .. )
+doskey gita = for /d %%a in (*.*) do @(echo --^^^> %%a - git $* ^& cd %%a ^& git $* ^& echo. ^& cd .. )
 
 :: tool dir setup
 if "%TOOLS_DIR%" NEQ "" (
