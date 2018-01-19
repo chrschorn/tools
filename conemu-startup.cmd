@@ -17,6 +17,7 @@ if exist %localscr% (
 )
 
 :: Navigation
+doskey cd = cd /d $*
 doskey cl = cd $* $T ls -l --show-control-chars -F --color
 doskey ls = ls --show-control-chars -F --color $*
 doskey ll = ls -l --show-control-chars -F --color $*
@@ -64,8 +65,8 @@ doskey pipupdateall = pip freeze --local ^| grep -v '^\-e' ^| cut -d = -f 1  ^| 
 
 :: Aliases
 doskey aliases     = doskey /MACROS
-doskey editaliases = gvim "%~f0"
-doskey editlocalaliases = gvim %localscr%
+doskey editaliases = gvim --remote-silent "%~f0"
+doskey editlocalaliases = gvim --remote-silent %localscr%
 
 :: call local script
 if exist %localscr% (
