@@ -59,6 +59,7 @@ doskey g     = gvim --remote-silent $*
 doskey e.    = explorer .
 doskey npp   = "%ProgramFiles(x86)%\Notepad++\notepad++.exe" $*
 doskey clear = cls
+doskey mdshow = markdown_py $1 ^> $1.html $T start $1.html $T sleep 1 $T del $1.html
 
 :: General shortcuts
 doskey pipupdateall = pip freeze --local ^| grep -v '^\-e' ^| cut -d = -f 1  ^| xargs pip install -U
