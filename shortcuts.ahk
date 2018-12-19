@@ -112,3 +112,7 @@ Return
 #If !WinExist(keepass_id)
 ^!k::Run %keepass_path%
 
+
+; ---------------------
+#include %A_AppData%\..\..\shortcuts.local.ahk
+
