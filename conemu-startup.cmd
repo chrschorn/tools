@@ -39,20 +39,20 @@ doskey gco = git checkout $*
 doskey gita = for /d %%a in (*.*) do @(echo --^^^> %%a - git $* ^& cd %%a ^& git $* ^& echo. ^& cd .. )
 
 :: tool dir setup
-if "%TOOLS_DIR%" NEQ "" (
-    doskey pss   = python "%TOOLS_DIR%\scheduleshutdown.py" $*
-    doskey bud   = python "%TOOLS_DIR%\datefilebackup.py" $*
-    doskey pych  = python "%TOOLS_DIR%\pycharmlauncher.py" $*
-    doskey rfile = python "%TOOLS_DIR%\randfile.py" $*
-    doskey editshortcuts = gvim "%TOOLS_DIR%\shortcuts.ahk"
-    doskey cdtooldir = cd /d "%TOOLS_DIR%"
+if "%___TOOLS_DIR%" NEQ "" (
+    doskey pss   = python "%___TOOLS_DIR%\scheduleshutdown.py" $*
+    doskey bud   = python "%___TOOLS_DIR%\datefilebackup.py" $*
+    doskey pych  = python "%___TOOLS_DIR%\pycharmlauncher.py" $*
+    doskey rfile = python "%___TOOLS_DIR%\randfile.py" $*
+    doskey editshortcuts = gvim "%___TOOLS_DIR%\shortcuts.ahk"
+    doskey cdtooldir = cd /d "%___TOOLS_DIR%"
 ) else (
     echo No TOOLS_DIR set!
 )
 
 :: Folders
-doskey pr = cd /d "%PROJECT_DIR%"
-doskey ws = cd /d "%WORKSPACE_DIR%"
+doskey pr = cd /d "%___PROJECT_DIR%"
+doskey ws = cd /d "%___WORKSPACE_DIR%"
 
 :: Misc
 doskey g     = gvim --remote-silent $*
