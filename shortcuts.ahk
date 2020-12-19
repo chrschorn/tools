@@ -49,15 +49,13 @@ StartOrActivate(id, path, maximized:=true)
 ; ---------
 EnvGet, appdata, APPDATA  ; left: env variable, right: script variable name
 EnvGet, home, USERPROFILE
+EnvGet, prog86, programfiles(x86)
 
 cmder_id = ahk_class VirtualConsoleClass
 cmder_path = %home%\cmder\Cmder.exe
 
-spotify_id = ahk_class SpotifyMainWindow
-spotify_path = %appdata%\Spotify\Spotify.exe
-
 keepass_id = ahk_exe KeePass.exe
-keepass_path = %home%\KeePass\KeePass.exe
+keepass_path = %prog86%\KeePass Password Safe 2\KeePass.exe
 
 gvim_id = ahk_class Vim
 gvim_path = gvim.exe
@@ -77,9 +75,6 @@ calc_path = calc.exe
 >^End::Media_Play_Pause  ; >^ = Right CTRL
 >^Del::Media_Prev
 >^PgDn::Media_Next
->^Insert::WinMenuSelectItem, %spotify_id%, , 4&, 8&  ; Spotify Shuffle Mode
->^PgUp::WinMenuSelectItem, %spotify_id%, , 4&, 9& ; Spotify Repeat Mode
->^Home::StartOrActivate(spotify_id, spotify_path)  ; start spotify maximized or activate spotify if already exists
 >^Up::Send {Volume_Up}
 >^Down::Send {Volume_Down}
 #l::Media_Stop  ; stop music when locking windows
