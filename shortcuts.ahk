@@ -9,6 +9,8 @@
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 
+#MaxHotkeysPerInterval 300
+
 
 ; ---------------
 ; Custom settings
@@ -44,6 +46,23 @@ StartOrActivate(id, path, maximized:=true)
     Return
 }
 
+
+HARestAPI(path, payload) 
+{
+    ; Store the auth token as env var "HA_API_TOKEN"
+	req := ComObjCreate("WinHttp.WinHttpRequest.5.1")
+	req.Open("POST", "https://home.schorn.me:443/api" . path, False)
+	EnvGet, HA_API_TOKEN, HA_API_TOKEN
+	req.setRequestHeader("Authorization", "Bearer " . HA_API_TOKEN)
+	req.setRequestHeader("Content-Type", "application/json")
+	req.Send(payload)
+	req.WaitForResponse()
+    ; For debugging:
+	;resp := req.ResponseText
+	;MsgBox, Response: %resp%
+    Return
+}
+
 ; ---------
 ; Variables
 ; ---------
@@ -51,23 +70,10 @@ EnvGet, appdata, APPDATA  ; left: env variable, right: script variable name
 EnvGet, home, USERPROFILE
 EnvGet, prog86, programfiles(x86)
 
-cmder_id = ahk_class VirtualConsoleClass
-cmder_path = %home%\cmder\Cmder.exe
-
-keepass_id = ahk_exe KeePass.exe
-keepass_path = %prog86%\KeePass Password Safe 2\KeePass.exe
-
-gvim_id = ahk_class Vim
-gvim_path = gvim.exe
-
-calc_id = ahk_class CalcFrame
-calc_path = calc.exe
-
 
 ; --------------------------------------------------------------------------------------
 ; Hotkeys Section
 ; --------------------------------------------------------------------------------------
-
 
 ; ---------------------
 ; Spotify Control
@@ -88,26 +94,39 @@ WinGetClass, class, A
 MsgBox, The active window's class is "%class%".
 Return
 
+;----------------------
+; Home automation
+;----------------------
+^F9::HARestAPI("/services/scene/turn_on", "{""entity_id"": ""scene.office_christoph_chill""}")
+^F10::HARestAPI("/services/scene/turn_on", "{""entity_id"": ""scene.office_christoph_chill_bright""}")
+^F12::HARestAPI("/services/switch/toggle", "{""entity_id"": ""switch.virtual_switch_office_christoph_speakers""}")
 
 ;----------------------
 ; Start or activate programs
 ;----------------------
-#If !WinActive(gvim_id)
->^g::StartOrActivate(gvim_id, gvim_path)
-
-#If !WinActive(calc_id)
->^r::StartOrActivate(calc_id, calc_path, false)
+#IfWinActive ahk_class CalcFrame 
+>^r::StartOrActivate("ahk_class CalcFrame", "calc.exe", false)
+#IfWinActive
 
 ; ---------------------
 ; Run programs if no window of them exists (typically have own activate hotkey)
 ; ---------------------
-#If !WinExist(cmder_id)
-^ö::Run %cmder_path%
+#IfWinExist ahk_class VirtualConsoleClass
+^ö::Run %home%\cmder\Cmder.exe
+#IfWinExist
 
-#If !WinExist(keepass_id)
-^!k::Run %keepass_path%
+
+#IfWinExist ahk_exe KeePass.exe
+^!k::Run %prog86%\KeePass Password Safe 2\KeePass.exe
+#IfWinExist
+
+
+#IfWinActive ahk_exe cs2.exe
+LAlt::F9
+#IfWinActive
 
 
 ; ---------------------
 #include %A_AppData%\..\..\shortcuts.local.ahk
+
 
